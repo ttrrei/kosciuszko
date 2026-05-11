@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+.pytest_cache/
+
+# Oracle Wallet & Credentials
+wallet/
+*.sso
+*.p12
+*.tnsnames.ora
+ojdbc.properties
+cwallet.sso
+
+# Logs & OS
+*.log
+.DS_Store
