@@ -44,7 +44,9 @@ To guarantee data integrity despite network instability or OOM (Out-of-Memory) r
 │   ├── views/          # Logic for recovery and debugging
 │   └── procedures/     # PL/SQL technical analysis engines
 ├── scripts/            # Operational automation for cron and cleanup
+│   └── cron_jobs/      # Scheduled ingestion wrappers
 ├── tests/              # TDD suite powered by pytest
+├── config/             # Environment examples and runtime configuration
 └── docs/               # Technical specifications and research
 ```
 
