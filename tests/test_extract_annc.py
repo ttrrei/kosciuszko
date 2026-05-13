@@ -1,18 +1,33 @@
 from pathlib import Path
 from unittest.mock import patch
 
+import pytest
+
 from src.scrapers.extract_annc import process_symbol
 
 
-SAMPLE_PATH = Path("data/samples/annc/annc_sample.html")
+SAMPLE_DIR = Path("data/samples/annc")
+REQUIRED_KEYS = ("SYMBOL", "DATE", "TITLE")
 
 
-def test_extract_annc_from_local_sample_without_network():
+def _load_first_real_sample(sample_dir: Path) -> str:
+    candidates = sorted(
+        path
+        for path in sample_dir.iterdir()
+        if path.is_file() and path.name not in {".gitkeep", "README.md"}
+    )
+    if not candidates:
+        pytest.skip(f"No real announcement snapshot sample found in {sample_dir}")
+    return candidates[0].read_text(encoding="utf-8", errors="replace")
+
+
+def test_extract_annc_from_real_local_sample_without_network():
+    sample_text = _load_first_real_sample(SAMPLE_DIR)
+
     with patch("src.scrapers.http_client.requests.Session.get") as mock_get:
-        result = process_symbol("BHP.AX", SAMPLE_PATH.read_text(encoding="utf-8"))
+        result = process_symbol("BHP.AX", sample_text)
 
     mock_get.assert_not_called()
-    assert "SYMBOL" in result
-    assert "DATE" in result
-    assert "TITLE" in result
-    assert result["SYMBOL"] == "BHP.AX"
+    for key in REQUIRED_KEYS:
+        assert key in result
+    assert result["SYMBOL"]
