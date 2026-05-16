@@ -1,0 +1,33 @@
+{
+  "yahoo": {
+    "url_template": "https://query2.finance.yahoo.com/v8/finance/chart/{symbol}.AX?interval=1h&range=60d",
+    "target_table": "EQUITY.ODS_YAHOO_HISTORY",
+    "primary_keys": ["CODE", "RAW_TIMESTAMP"],
+    "filter_seconds": 3600
+  },
+  "shortman": {
+    "url": "https://www.shortman.com.au/downloadeddata/latest.csv",
+    "target_table": "EQUITY.ODS_SHORTMAN_HISTORY",
+    "primary_keys": ["CODE", "UPDATE_DATE"],
+    "csv_mappings": {
+      "PRODUCT_NAME": "Product",
+      "CODE": "Code",
+      "SHORT_POSITIONS": "Short Positions",
+      "TOTAL_ISSUE": "Total Product in Issue",
+      "PERCENTAGE": "% of Total Product in Issue on Short"
+    }
+  },
+  "afr": {
+    "url_template": "https://www.afr.com/company/asx/{symbol}",
+    "table_struct": "EQUITY.ODS_AFR_HISTORY",
+    "table_eav": "EQUITY.ODS_QUOTE",
+    "struct_keys": ["CODE", "UPDATE_TIME"],
+    "eav_keys": ["CODE", "TAG", "UPDATE_TIME"],
+    "selectors": {
+      "PRICE": {"tag": null, "attr": "data-test", "value": "last-price"},
+      "OPEN": {"tag": null, "attr": "data-test", "value": "open-price"},
+      "VOLUME": {"tag": null, "attr": "data-test", "value": "volume"},
+      "MARKET_CAP": {"tag": null, "attr": "data-test", "value": "mkt-cap"}
+    }
+  }
+}

@@ -69,6 +69,7 @@ class DbOperator:
         data: list[dict[str, Any]] | None = None,
         *,
         target_table: str | None = None,
+        primary_keys: list[str] | None = None,
     ) -> None:
         """Execute merge operations in BATCH_SIZE chunks.
 
@@ -77,6 +78,8 @@ class DbOperator:
             data: Records to merge.
             target_table: Compatibility alias used by early tests while the
                 final MERGE SQL builder is still evolving.
+            primary_keys: Optional business keys supplied by profile-driven
+                scrapers for future MERGE SQL generation.
         """
         if not data:
             return
