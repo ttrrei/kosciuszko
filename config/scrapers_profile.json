@@ -1,9 +1,9 @@
 {
   "yahoo": {
-    "url_template": "https://query2.finance.yahoo.com/v8/finance/chart/{symbol}.AX?interval=1h&range=60d",
     "target_table": "EQUITY.ODS_YAHOO_HISTORY",
     "primary_keys": ["CODE", "RAW_TIMESTAMP"],
-    "filter_seconds": 3600
+    "period": "60d",
+    "interval": "1h"
   },
   "shortman": {
     "url": "https://www.shortman.com.au/downloadeddata/latest.csv",
